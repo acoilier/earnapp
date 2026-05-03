@@ -180,7 +180,7 @@ Publishing runs through the `publish` workflow:
 
 There is also a daily upstream check. If the official installer changes, GitHub opens an issue so the new script can be reviewed before the pinned hash is updated.
 
-The `main` branch is protected. Changes to build-relevant files must keep the CI green before they are merged.
+The `main` branch is protected. The required CI check always reports a result, but heavy Docker work only runs when build-relevant files change.
 
 ## Supporting maintenance through referral
 
