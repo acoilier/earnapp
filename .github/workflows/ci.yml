@@ -2,26 +2,8 @@ name: ci
 
 on:
   pull_request:
-    paths:
-      - Dockerfile
-      - entrypoint.sh
-      - docker-compose.yml
-      - .dockerignore
-      - .env.example
-      - Makefile
-      - scripts/**
-      - .github/workflows/ci.yml
   push:
     branches: [main]
-    paths:
-      - Dockerfile
-      - entrypoint.sh
-      - docker-compose.yml
-      - .dockerignore
-      - .env.example
-      - Makefile
-      - scripts/**
-      - .github/workflows/ci.yml
   workflow_dispatch:
 
 concurrency:
@@ -37,14 +19,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect build-relevant changes
+        id: changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base="origin/${{ github.base_ref }}"
+            git fetch origin "${{ github.base_ref }}" --depth=1
+            changed="$(git diff --name-only "$base"...HEAD)"
+          else
+            before="${{ github.event.before }}"
+            if [[ -z "$before" || "$before" == "0000000000000000000000000000000000000000" ]]; then
+              changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+            else
+              changed="$(git diff --name-only "$before" HEAD)"
+            fi
+          fi
+
+          printf 'Changed files:\n%s\n' "$changed"
+
+          if printf '%s\n' "$changed" | grep -Eq '^(Dockerfile|entrypoint\.sh|docker-compose\.yml|\.dockerignore|\.env\.example|Makefile|scripts/|\.github/workflows/ci\.yml)'; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain skipped heavy checks
+        if: steps.changes.outputs.build != 'true'
+        run: |
+          echo "No build-relevant files changed. Skipping checksum, Docker build and Trivy scan."
 
       - name: Check pinned EarnApp installer checksum
+        if: steps.changes.outputs.build == 'true'
         run: bash scripts/check-installer.sh
 
       - name: Validate compose file
+        if: steps.changes.outputs.build == 'true'
         run: docker compose config >/dev/null
 
       - name: Build local image
+        if: steps.changes.outputs.build == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -57,6 +81,7 @@ jobs:
             VERSION=ci-${{ github.sha }}
 
       - name: Scan image with Trivy
+        if: steps.changes.outputs.build == 'true'
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: earnapp-safe:test
