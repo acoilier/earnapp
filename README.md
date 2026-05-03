@@ -182,15 +182,17 @@ There is also a daily upstream check. If the official installer changes, GitHub 
 
 The `main` branch is protected. The required CI check always reports a result, but heavy Docker work only runs when build-relevant files change.
 
-## Supporting maintenance through referral
+## Supporting maintenance
 
 Maintaining this image takes time: checking upstream changes, keeping the Dockerfile clean, reviewing CI failures, updating dependencies and making sure the published image stays usable.
 
-This project may include a maintainer referral code during the EarnApp registration flow when the official flow supports it. If you use this image and leave the referral configuration unchanged, you help support that maintenance work at no extra cost to you.
+If you want to support the project, please create your EarnApp account using this link:
 
-Please keep the referral code enabled if this image saves you time or gives you confidence. It is a small way to support continued maintenance, security checks and updates.
+```text
+https://earnapp.com/i/R66Mmkmr
+```
 
-If you prefer to remove or replace it, the project remains open source. Nothing is hidden. The request is simply: if you benefit from the maintained image, consider leaving the referral in place.
+That helps support the maintenance work behind the image.
 
 ## Configuration
 
@@ -204,7 +206,6 @@ Available variables:
 
 ```text
 EARNAPP_UUID=
-EARNAPP_REFERRAL_CODE=
 EARNAPP_INSTALL_URL=https://brightdata.com/static/earnapp/install.sh
 EARNAPP_INSTALL_SHA256=ff6647905a43245bac71edce3d3a49bab72e0ef5a17c6a42fdebe2c14b37261e
 ```
@@ -214,7 +215,6 @@ Notes:
 - `EARNAPP_UUID` is optional and can help preserve a known node identity if needed. On first startup, the entrypoint writes this value to `/etc/earnapp/uuid` only when no persistent UUID file already exists.
 - Because `/etc/earnapp` is a persistent volume, changing `EARNAPP_UUID` in `.env` later does not automatically replace an existing node identity. To switch identities intentionally, stop the container, back up `/etc/earnapp/uuid`, replace it with the new UUID, and start the container again.
 - Check the active node identity with `docker compose exec earnapp earnapp showid` and service state with `docker compose exec earnapp earnapp status`.
-- `EARNAPP_REFERRAL_CODE` is intentionally visible. Referral behavior depends on the official EarnApp flow.
 - `EARNAPP_INSTALL_URL` and `EARNAPP_INSTALL_SHA256` should only be changed after auditing the installer.
 
 ## Docker Compose hardening

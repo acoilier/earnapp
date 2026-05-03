@@ -6,7 +6,6 @@ Ce projet fournit une image Docker EarnApp maintenue avec une priorité forte su
 - la transparence
 - la reproductibilité
 - la sécurité relative de la chaîne de build
-- la clarté sur le rôle du parrainage
 
 ## Ce que fait l’image
 
@@ -16,16 +15,15 @@ Ce projet fournit une image Docker EarnApp maintenue avec une priorité forte su
 - persiste l’état dans `/etc/earnapp`
 - limite les privilèges du container au strict nécessaire
 
-## Transparence sur le parrainage
+## Soutien au projet
 
-Cette image peut intégrer un code de parrainage du mainteneur dans le flux d’enregistrement.
+Les utilisateurs publics sont invités à créer leur compte via ce lien de soutien:
 
-Cela doit être indiqué clairement et visiblement aux utilisateurs.
+```text
+https://earnapp.com/i/R66Mmkmr
+```
 
-Formulation recommandée dans le README public:
-- "Ce dépôt peut injecter un code de parrainage du mainteneur dans le processus d’enregistrement EarnApp."
-- "L’exécution de l’image peut conduire à l’attribution d’un parrainage au mainteneur."
-- "Le code exact et son mode d’injection doivent être documentés publiquement."
+Ce lien permet de soutenir le projet de maintien de l’image.
 
 ## Bonnes pratiques publiques
 
@@ -41,7 +39,6 @@ Formulation recommandée dans le README public:
 Le projet doit rester honnête sur son fonctionnement:
 - l’image n’est pas un binaire officiel d’EarnApp
 - elle s’appuie sur un install script tiers
-- un mécanisme de parrainage peut être présent
 - l’utilisateur doit pouvoir comprendre ce qui est fait au moment de l’exécution
 
 ## Livrables publics attendus

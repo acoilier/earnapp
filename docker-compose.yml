@@ -10,7 +10,6 @@ services:
     restart: unless-stopped
     environment:
       EARNAPP_UUID: ${EARNAPP_UUID:-}
-      EARNAPP_REFERRAL_CODE: ${EARNAPP_REFERRAL_CODE:-}
     volumes:
       - earnapp_data:/etc/earnapp
     tmpfs:

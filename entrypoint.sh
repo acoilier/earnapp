@@ -25,10 +25,6 @@ if [[ -n "${EARNAPP_UUID:-}" && ! -s /etc/earnapp/uuid ]]; then
   chmod 0600 /etc/earnapp/uuid || true
 fi
 
-if [[ -n "${EARNAPP_REFERRAL_CODE:-}" ]]; then
-  log "Referral code variable is present. Exact support depends on the official EarnApp registration flow."
-fi
-
 if command -v service >/dev/null 2>&1; then
   service earnapp start || true
   service earnapp_upgrader start || true

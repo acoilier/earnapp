@@ -6,7 +6,7 @@ Trust and signing release.
 
 - Added Sigstore Cosign keyless signatures for published images.
 - Added `SECURITY.md` with reporting scope and verification guidance.
-- Added `SUPPORT.md` for referral-based maintenance support.
+- Added `SUPPORT.md` for maintenance support.
 - Added `CHANGELOG.md`.
 - Added an upstream installer review issue template.
 - Added public verification instructions to the README.
@@ -39,7 +39,7 @@ Initial public release.
 - Enabled BuildKit SBOM and provenance generation.
 - Added daily upstream installer checksum monitoring.
 - Added Docker Compose hardening defaults.
-- Documented referral-based maintenance support.
+- Documented support link for maintenance.
 
 Published digest:
 
