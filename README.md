@@ -184,15 +184,13 @@ The `main` branch is protected. The required CI check always reports a result, b
 
 ## Supporting maintenance
 
-Maintaining this image takes time: checking upstream changes, keeping the Dockerfile clean, reviewing CI failures, updating dependencies and making sure the published image stays usable.
+Maintaining this image takes time: tracking upstream changes, reviewing CI, updating dependencies, and keeping the image usable.
 
-If you want to support the project, please create your EarnApp account using this link:
+If you want to support the project, use this EarnApp link when creating your account:
 
 ```text
 https://earnapp.com/i/R66Mmkmr
 ```
-
-That helps support the maintenance work behind the image.
 
 ## Configuration
 
