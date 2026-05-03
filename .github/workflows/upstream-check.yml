@@ -28,9 +28,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const body = fs.readFileSync('/tmp/check.txt', 'utf8') + '
-
-Action requise: auditer le nouveau script EarnApp, puis mettre à jour EARNAPP_INSTALL_SHA256 dans Dockerfile, .env.example, Makefile et les workflows.';
+            const body = fs.readFileSync('/tmp/check.txt', 'utf8') + `\n\nAction requise: auditer le nouveau script EarnApp, puis mettre à jour EARNAPP_INSTALL_SHA256 dans Dockerfile, .env.example, Makefile et les workflows.`;
             const title = 'EarnApp installer checksum changed';
             const {data: issues} = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
