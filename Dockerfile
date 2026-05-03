@@ -17,11 +17,12 @@ WORKDIR /opt/earnapp
 RUN set -eux;     curl -fsSL "$EARNAPP_INSTALL_URL" -o /usr/local/bin/earnapp-install;     echo "$EARNAPP_INSTALL_SHA256  /usr/local/bin/earnapp-install" | sha256sum -c -;     chmod 0755 /usr/local/bin/earnapp-install;     mkdir -p /etc/earnapp /var/log/earnapp
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod 0755 /usr/local/bin/entrypoint.sh
+COPY docker-curl-wrapper.sh /usr/local/bin/curl
+RUN chmod 0755 /usr/local/bin/entrypoint.sh /usr/local/bin/curl
 
 VOLUME ["/etc/earnapp"]
 
-HEALTHCHECK --interval=60s --timeout=10s --start-period=120s --retries=3   CMD pgrep -x earnapp >/dev/null 2>&1 || exit 1
+HEALTHCHECK --interval=60s --timeout=10s --start-period=120s --retries=3   CMD earnapp status 2>&1 | grep -q 'Current status: enabled' || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["run"]

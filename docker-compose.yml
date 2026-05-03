@@ -14,7 +14,7 @@ services:
     volumes:
       - earnapp_data:/etc/earnapp
     tmpfs:
-      - /tmp
+      - /tmp:exec,mode=1777
       - /run
     cap_drop:
       - ALL

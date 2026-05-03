@@ -211,7 +211,9 @@ EARNAPP_INSTALL_SHA256=ff6647905a43245bac71edce3d3a49bab72e0ef5a17c6a42fdebe2c14
 
 Notes:
 
-- `EARNAPP_UUID` is optional and can help preserve a known node identity if needed.
+- `EARNAPP_UUID` is optional and can help preserve a known node identity if needed. On first startup, the entrypoint writes this value to `/etc/earnapp/uuid` only when no persistent UUID file already exists.
+- Because `/etc/earnapp` is a persistent volume, changing `EARNAPP_UUID` in `.env` later does not automatically replace an existing node identity. To switch identities intentionally, stop the container, back up `/etc/earnapp/uuid`, replace it with the new UUID, and start the container again.
+- Check the active node identity with `docker compose exec earnapp earnapp showid` and service state with `docker compose exec earnapp earnapp status`.
 - `EARNAPP_REFERRAL_CODE` is intentionally visible. Referral behavior depends on the official EarnApp flow.
 - `EARNAPP_INSTALL_URL` and `EARNAPP_INSTALL_SHA256` should only be changed after auditing the installer.
 
@@ -225,7 +227,7 @@ cap_drop:
 security_opt:
   - no-new-privileges:true
 tmpfs:
-  - /tmp
+  - /tmp:exec,mode=1777
   - /run
 ```
 
@@ -295,6 +297,7 @@ Public files:
 ```text
 Dockerfile
 entrypoint.sh
+docker-curl-wrapper.sh
 docker-compose.yml
 .env.example
 scripts/check-installer.sh
