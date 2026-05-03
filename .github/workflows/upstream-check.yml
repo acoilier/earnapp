@@ -9,6 +9,10 @@ permissions:
   contents: read
   issues: write
 
+concurrency:
+  group: upstream-check
+  cancel-in-progress: true
+
 jobs:
   installer-checksum:
     runs-on: ubuntu-latest

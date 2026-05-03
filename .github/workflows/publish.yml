@@ -18,6 +18,10 @@ permissions:
   packages: write
   id-token: write
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   dockerhub:
     runs-on: ubuntu-latest

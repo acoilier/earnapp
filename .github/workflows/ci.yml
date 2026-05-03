@@ -2,9 +2,31 @@ name: ci
 
 on:
   pull_request:
+    paths:
+      - Dockerfile
+      - entrypoint.sh
+      - docker-compose.yml
+      - .dockerignore
+      - .env.example
+      - Makefile
+      - scripts/**
+      - .github/workflows/ci.yml
   push:
     branches: [main]
+    paths:
+      - Dockerfile
+      - entrypoint.sh
+      - docker-compose.yml
+      - .dockerignore
+      - .env.example
+      - Makefile
+      - scripts/**
+      - .github/workflows/ci.yml
   workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
