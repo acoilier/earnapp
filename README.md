@@ -81,6 +81,62 @@ acoilier/earnapp:v0.1.0
 
 For fully pinned deployments, use a version tag instead of `latest`.
 
+Published digest for `v0.1.0`:
+
+```text
+docker.io/acoilier/earnapp@sha256:cdd20c7479dc13398920b62a3de55925075a1b5501bd86b20d7118c5f8641c3f
+```
+
+Use the digest form if you want the exact same image every time.
+
+## Verified build pipeline
+
+Docker Hub images are built and published only by GitHub Actions from this public repository.
+
+Build path:
+
+```text
+Git tag or GitHub release
+  -> publish workflow
+  -> installer checksum verification
+  -> Docker Buildx multi-arch build
+  -> SBOM and provenance generation
+  -> Cosign keyless signature
+  -> Docker Hub push
+```
+
+No private build machine is involved. You can open the publish workflow run, inspect the logs and match the published Docker digest.
+
+## Verify it yourself
+
+Check the pinned installer hash:
+
+```bash
+bash scripts/check-installer.sh
+```
+
+Inspect the published image:
+
+```bash
+docker buildx imagetools inspect acoilier/earnapp:v0.1.0
+```
+
+Verify the Cosign signature:
+
+```bash
+cosign verify \
+  --certificate-identity-regexp 'https://github.com/acoilier/earnapp/.github/workflows/publish.yml@refs/tags/v.*' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  acoilier/earnapp:v0.1.0
+```
+
+Build locally from source:
+
+```bash
+make check
+make build
+```
+
 ## Trust model
 
 This image is not an official EarnApp or BrightData image. It is a community-maintained container around the public EarnApp Linux installer.
@@ -123,6 +179,8 @@ Publishing runs through the `publish` workflow:
 - push to Docker Hub only from an explicit tag, release or manual workflow run
 
 There is also a daily upstream check. If the official installer changes, GitHub opens an issue so the new script can be reviewed before the pinned hash is updated.
+
+The `main` branch is protected. Changes to build-relevant files must keep the CI green before they are merged.
 
 ## Supporting maintenance through referral
 
