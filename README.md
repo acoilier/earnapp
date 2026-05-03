@@ -1,5 +1,8 @@
 # acoilier/earnapp
 
+[![ci](https://github.com/acoilier/earnapp/actions/workflows/ci.yml/badge.svg)](https://github.com/acoilier/earnapp/actions/workflows/ci.yml)
+[![publish](https://github.com/acoilier/earnapp/actions/workflows/publish.yml/badge.svg)](https://github.com/acoilier/earnapp/actions/workflows/publish.yml)
+
 A maintained Docker image for EarnApp, built in the open, with a pinned installer checksum and automated security checks.
 
 This image exists for one simple reason: running random EarnApp containers from Docker Hub is hard to trust. With this repository, you can see exactly how the image is built, which installer is used, which hash is expected, and what happens when upstream changes.
