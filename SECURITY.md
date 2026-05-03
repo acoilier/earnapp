@@ -50,7 +50,7 @@ Published images are signed with Sigstore Cosign using GitHub Actions OIDC. User
 Example:
 
 ```bash
-cosign verify   --certificate-identity-regexp 'https://github.com/acoilier/earnapp/.github/workflows/publish.yml@refs/tags/v.*'   --certificate-oidc-issuer https://token.actions.githubusercontent.com   acoilier/earnapp:v0.1.0
+cosign verify   --certificate-identity-regexp 'https://github.com/acoilier/earnapp/.github/workflows/publish.yml@refs/tags/v.*'   --certificate-oidc-issuer https://token.actions.githubusercontent.com   acoilier/earnapp:v0.1.1
 ```
 
 ## Secrets

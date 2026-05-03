@@ -76,7 +76,7 @@ Recommended:
 
 ```text
 acoilier/earnapp:latest
-acoilier/earnapp:v0.1.0
+acoilier/earnapp:v0.1.1
 ```
 
 For fully pinned deployments, use a version tag instead of `latest`.
@@ -84,7 +84,7 @@ For fully pinned deployments, use a version tag instead of `latest`.
 Published digest for `v0.1.0`:
 
 ```text
-docker.io/acoilier/earnapp@sha256:cdd20c7479dc13398920b62a3de55925075a1b5501bd86b20d7118c5f8641c3f
+docker.io/acoilier/earnapp@sha256:f6aa57f162c9ce80a0859999aa12b05398935d76d2c74e34ddabd5036a6a823b
 ```
 
 Use the digest form if you want the exact same image every time.
@@ -118,7 +118,7 @@ bash scripts/check-installer.sh
 Inspect the published image:
 
 ```bash
-docker buildx imagetools inspect acoilier/earnapp:v0.1.0
+docker buildx imagetools inspect acoilier/earnapp:v0.1.1
 ```
 
 Verify the Cosign signature:
@@ -127,7 +127,7 @@ Verify the Cosign signature:
 cosign verify \
   --certificate-identity-regexp 'https://github.com/acoilier/earnapp/.github/workflows/publish.yml@refs/tags/v.*' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-  acoilier/earnapp:v0.1.0
+  acoilier/earnapp:v0.1.1
 ```
 
 Build locally from source:

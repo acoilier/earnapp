@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.1.1
+
+Trust and signing release.
+
+- Added Sigstore Cosign keyless signatures for published images.
+- Added `SECURITY.md` with reporting scope and verification guidance.
+- Added `SUPPORT.md` for referral-based maintenance support.
+- Added `CHANGELOG.md`.
+- Added an upstream installer review issue template.
+- Added public verification instructions to the README.
+- Enabled branch protection on `main` with required CI status.
+
+Published digest:
+
+```text
+docker.io/acoilier/earnapp@sha256:f6aa57f162c9ce80a0859999aa12b05398935d76d2c74e34ddabd5036a6a823b
+```
+
+Cosign verification:
+
+```bash
+cosign verify \
+  --certificate-identity-regexp 'https://github.com/acoilier/earnapp/.github/workflows/publish.yml@refs/tags/v.*' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  acoilier/earnapp:v0.1.1
+```
+
 ## v0.1.0
 
 Initial public release.
